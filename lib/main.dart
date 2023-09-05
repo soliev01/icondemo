@@ -55,7 +55,7 @@ class Home extends StatelessWidget {
           ),
         ],
       ),
-      body: PersonList(),
+      body: const PersonList(),
     );
   }
 }
