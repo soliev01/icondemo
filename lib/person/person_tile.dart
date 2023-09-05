@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icondemo/person/model.dart';
+import 'package:icondemo/person/person_detail.dart';
 
 class PersonTile extends StatelessWidget {
   const PersonTile(this.p, {super.key});
@@ -12,7 +13,6 @@ class PersonTile extends StatelessWidget {
     return Card(
       elevation: 0,
       child: ListTile(
-        leading: _Leading(p.picture),
         title: Text(p.name),
         subtitle: _Info(balance: p.balance, email: p.email, date: p.registered),
         trailing: Icon(
@@ -21,6 +21,10 @@ class PersonTile extends StatelessWidget {
         ),
         isThreeLine: true,
         tileColor: Color(color),
+        onTap: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => DetailScreen(p: p)));
+        },
       ),
     );
   }
@@ -43,15 +47,5 @@ class _Info extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [Text(balance), Text(email), Text(date.toString())],
     );
-  }
-}
-
-class _Leading extends StatelessWidget {
-  const _Leading(this.url);
-  final String url;
-
-  @override
-  Widget build(BuildContext context) {
-    return CircleAvatar(foregroundImage: NetworkImage(url));
   }
 }
