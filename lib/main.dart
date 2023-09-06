@@ -33,14 +33,26 @@ class App extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final ScrollController _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+            tooltip: 'Jump to middle',
+            onPressed: () =>
+                _controller.jumpTo(_controller.position.maxScrollExtent / 2),
+            icon: const Icon(Icons.skip_next),
+          ),
           IconButton(
             onPressed: () => context.read<PersonCubit>().sortByDate(),
             icon: const Icon(Icons.date_range),
@@ -55,7 +67,7 @@ class Home extends StatelessWidget {
           ),
         ],
       ),
-      body: const PersonList(),
+      body: PersonList(controller: _controller),
     );
   }
 }

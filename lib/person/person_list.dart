@@ -5,7 +5,8 @@ import 'package:icondemo/person/person_cubit.dart';
 import 'package:icondemo/person/person_tile.dart';
 
 class PersonList extends StatelessWidget {
-  const PersonList({super.key});
+  const PersonList({super.key, required this.controller});
+  final ScrollController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +17,19 @@ class PersonList extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        return ListView.builder(
-          prototypeItem: PersonTile(Person.dummy()),
-          shrinkWrap: true,
-          itemCount: items.length,
-          itemBuilder: (_, index) {
-            return PersonTile(items[index]);
-          },
+        return Scrollbar(
+          controller: controller,
+          interactive: true,
+          thumbVisibility: true,
+          child: ListView.builder(
+            controller: controller,
+            prototypeItem: PersonTile(Person.dummy()),
+            shrinkWrap: true,
+            itemCount: items.length,
+            itemBuilder: (_, index) {
+              return PersonTile(items[index]);
+            },
+          ),
         );
       },
     );
